@@ -8,3 +8,9 @@ window.addEventListener('DOMContentLoaded', () => {
 		replaceText(`${dependency}-version`, process.versions[dependency]);
 	}
 });
+
+const { contextBridge, ipcRenderer } = require('electron');
+contextBridge.exposeInMainWorld('electronAPI', {
+	getImage: (callback) => ipcRenderer.on('get-image', callback),
+	closeWindow2: () => ipcRenderer.send('close-window-2'),
+});
